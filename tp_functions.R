@@ -307,7 +307,6 @@ riesgo_a_numeric <- function(x) {
 }
 
 presion_a_numeric <- function(x) {
-  
   res <- c()
   
   for (i in 1:length(x)) {
@@ -323,6 +322,29 @@ presion_a_numeric <- function(x) {
   }
   
   return(res)
+}
+
+ventilacion_a_numeric <- function(x) {
+  res <- c()
   
+  for (i in 1:length(x)) {
+    if (grepl("No", x[i])) {
+      res <- c(res, 1)
+    }
+    else if (grepl("Aplica", x[i])) {
+      res <- c(res, 2)
+    }
+    else {
+      res <- c(res, 3)
+    }
+  }
+  
+  return(res)
+}
+
+numeric_a_ventilacion <- function(x) {
+  if (x == 1) return("No")
+  if (x == 2) return("No aplica")
+  else return("Si")
 }
 

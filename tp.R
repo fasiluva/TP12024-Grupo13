@@ -19,9 +19,20 @@ datos_excel_solo_resultados$C20[is.na(datos_excel_solo_resultados$C20)] <- "No"
 datos_excel_solo_resultados$C22[is.na(datos_excel_solo_resultados$C22)] <- "Sin aumento"
 datos_excel_solo_resultados$C23[is.na(datos_excel_solo_resultados$C23)] <- "Sin aumento"
 
+for (i in seq_along(datos_excel_solo_resultados$C19)){
+  if (grepl("comprobante", datos_excel_solo_resultados$C19[i])){ 
+    datos_excel_solo_resultados$C19[i] <- "Propio\nc/comprobante"
+  }
+  
+  if (grepl("Propio sin", datos_excel_solo_resultados$C19[i])){ 
+    datos_excel_solo_resultados$C19[i] <- "Propio\ns/títulos"
+  }
+}
+
+
 for (i in seq_along(datos_excel_solo_resultados$C24)){
   if (grepl("informalmente", datos_excel_solo_resultados$C24[i])){ 
-    datos_excel_solo_resultados$C24[i] <- "Conexion a vecino o red publica sin medidor"
+    datos_excel_solo_resultados$C24[i] <- "Conexion a vecino o\n red publica sin medidor"
   }
   
   if (grepl("cisterna", datos_excel_solo_resultados$C24[i])){ 
@@ -29,11 +40,14 @@ for (i in seq_along(datos_excel_solo_resultados$C24)){
   }
   
   if (grepl("A través de una conexión con medidor a la red pública", datos_excel_solo_resultados$C24[i])) {
-    datos_excel_solo_resultados$C24[i] <- "Conexion a la red publica con medidor"
+    datos_excel_solo_resultados$C24[i] <- "Conexion a la red\n publica con medidor"
   }
   
   if (grepl("acarrear", datos_excel_solo_resultados$C24[i])) {
     datos_excel_solo_resultados$C24[i] <- "Acarreo desde afuera"
+  }
+  if (grepl("tanque comunitario", datos_excel_solo_resultados$C24[i])) {
+    datos_excel_solo_resultados$C24[i] <- "Conexión a un\n tanque comunitario."
   }
 }
 
@@ -190,7 +204,7 @@ plot(x=datos_excel_solo_resultados[["C6"]], y=cant_menores,
      xlim=c(0,10),
      ylim=c(0,9),
      axes=FALSE,
-     main="Diagrama de dispersión de cantidad de integrantes de la vivienda e integrantes y menores de edad\nBarrios populares de Argentina, año 2020."
+     main="Diagrama de dispersión de cantidad de integrantes de la vivienda y menores de edad en las mismas\nBarrios populares de Argentina, año 2020."
      )
 mtext(fuente, side=1, line=4, at=2)
 axis(1, seq(0,10,1))
@@ -214,11 +228,13 @@ barplot(height=cant_obtencion_agua[order(cant_obtencion_agua, decreasing=TRUE)],
         horiz=TRUE,
         xlim=c(0,700),
         col=paleta[2],
+        cex.names=0.9,
+        xlab="Cantidad de viviendas",
         main="Métodos de obtención del agua de las viviendas.\nBarrios populares de Argentina, 2020."
         )
 abline(v=seq(0,700,50), col="grey", lty="dotted",)
 mtext("Fuente: La Poderosa. Encuesta realizado a barrios populares de Argentina.", 
-      side=1, line=3, at=100)
+      side=1, line=3, at=70)
 
 dev.off()
 
@@ -249,7 +265,7 @@ barplot(tabla_presion_almacenamiento,
         horiz=TRUE,
         col=paleta,
         xlim=c(0,300),
-        xlab="Viviendas",
+        xlab="Cantidad de viviendas",
         main="Presencia de capacidad de almacenamiento de agua en altura respecto a la presión del agua.\nBarrios populares de Argentina, 2020."
         )
 axis(side=1, seq(25,275,25))
@@ -279,9 +295,11 @@ cant_fuentes_calefaccion <- c("Red de gas" = cant_fuentes_calefaccion[1],
 cant_ventilacion <- datos_excel_solo_resultados[["C39"]]
 # ---
 moda(cant_ventilacion)
+numeric_a_ventilacion(mediana(ventilacion_a_numeric(cant_ventilacion)))
 # ---
 
 cant_ventilacion <- table(datos_excel_solo_resultados[["C39"]])
+
 par(mfrow = c(1, 2))
 
 barplot(cant_fuentes_calefaccion,
@@ -289,7 +307,7 @@ barplot(cant_fuentes_calefaccion,
         col=paleta[3],
         axes=FALSE,
         xlab="Fuente",
-        ylab="Viviendas",
+        ylab="Cantidad de viviendas",
         main="Fuentes de calefacción de las viviendas.\nBarrios populares de Argentina, 2020."
         )
 axis(side=2, at=seq(0, 550, 50))
@@ -326,8 +344,9 @@ cant_propiedad <- table(datos_excel_solo_resultados[["C19"]])
 barplot(cant_propiedad[order(cant_propiedad, decreasing=TRUE)], 
     col=paleta[3],
     ylim=c(0, 600), 
+    cex.names=0.9,
     main="Tipo de tenencia sobre la propiedad\nBarrios populares de Argentina, 2020.",
-    ylab="Viviendas",
+    ylab="Cantidad de viviendas",
     xlab="Tenencia")
 abline(h=seq(0,600, 50), col="black", lty=3)
 box()
@@ -348,7 +367,7 @@ hist(cant_costo,
      axes=FALSE,
      main="Costo aproximado del alquiler de las viviendas\nBarrios populares de Argentina, 2020.",
      xlab="Costo",
-     ylab="Viviendas"
+     ylab="Cantidad de viviendas"
      )
 axis(side=1, at=seq(3000, 30000, 3000))
 axis(side=2, at=seq(0, 40, 5))
@@ -433,7 +452,7 @@ barplot(cant_filtraciones[order(cant_filtraciones, decreasing=FALSE)],
         col=paleta[3],
         ylim=c(0, 600), 
         main="Filtraciones/humedad en las viviendas\nBarrios populares de Argentina, 2020.",
-        ylab="Viviendas",
+        ylab="Cantidad de viviendas",
         xlab="Ubicación de la filtración")
 abline(h=seq(0,600, 50), col="black", lty=3)
 
