@@ -186,18 +186,6 @@ boxplot(cant_mujeres, cant_varones, cant_disidentes,
 axis(2, seq(1,10,2))
 mtext(fuente, side=1, line=3, at=1)
 
-print(paste("Hay un total de", 
-            cant_menores_total, 
-            "menores en las viviendas, representando el", 
-            round(cant_menores_total/sum(cant_total_personas) * 100, 2),
-            "% del total de personas."))
-
-print(paste("Hay un total de", 
-            cant_discapacidad_total, 
-            "personas con alguna discapacidad en las viviendas, representando el", 
-            round(cant_discapacidad_total/sum(cant_total_personas) * 100, 2),
-            "% del total de personas."))
-
 plot(x=datos_excel_solo_resultados[["C6"]], y=cant_menores,
      xlab="Integrantes",
      ylab="Menores",
@@ -295,7 +283,7 @@ cant_fuentes_calefaccion <- c("Red de gas" = cant_fuentes_calefaccion[1],
 cant_ventilacion <- datos_excel_solo_resultados[["C39"]]
 # ---
 moda(cant_ventilacion)
-numeric_a_ventilacion(mediana(ventilacion_a_numeric(cant_ventilacion)))
+# numeric_a_ventilacion(mediana(ventilacion_a_numeric(cant_ventilacion)))
 # ---
 
 cant_ventilacion <- table(datos_excel_solo_resultados[["C39"]])
@@ -383,17 +371,17 @@ par(mfrow = c(1, 2))
 
 cant_tendido_electrico <- datos_excel_solo_resultados[["C41"]]
 # ---
-mediana(tendido_a_numeric(cant_tendido_electrico))
+# mediana(tendido_a_numeric(cant_tendido_electrico))
 moda(cant_tendido_electrico)
-cuartiles(tendido_a_numeric(cant_tendido_electrico))
+# cuartiles(tendido_a_numeric(cant_tendido_electrico))
 # ---
 
 cant_tendido_electrico <- table(cant_tendido_electrico)
 cant_incendios <- datos_excel_solo_resultados[["C43"]]
 # ---
-mediana(incendio_a_numeric(cant_incendios))
+# mediana(incendio_a_numeric(cant_incendios))
 moda(cant_incendios)
-cuartiles(incendio_a_numeric(cant_incendios))
+# cuartiles(incendio_a_numeric(cant_incendios))
 # ---
 
 cant_incendios <- table(cant_incendios)
