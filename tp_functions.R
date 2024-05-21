@@ -44,6 +44,22 @@ mediana <- function(x) {
   return(median(x))
 }
 
+# Dado un data frame, un array correspondiente
+# a las frecuencias del mismo y un k entre 1 y 3. 
+# Devuelve el cuartil indicado por k, el cuartil
+# 1, 2 o 3
+obtenCuartil <- function(dataF, frecuencia, k) {
+  frecAcum = cumsum(frecuencia)
+  res <- frecAcum >= (frecAcum[length(frecAcum)]+1)*k/4
+  j <- 1
+  for(i in res) {
+    if(i == TRUE) {
+      return(dataF[j,])
+    }
+    j <- j + 1
+  }
+}
+
 variacion <- function(x) {
   return(round(var(x), 3))
 }
