@@ -63,15 +63,15 @@ presAgua <- Datos_LP %>%
   group_by(`¿Cómo es la presión del agua?`) %>%
   summarize(frecuencia = n()) %>%
   arrange(factor(`¿Cómo es la presión del agua?`,
-                 levels = c("Débil", "Muy débil", "Buena"))) %>%
-  mutate(perc = frecuencia/sum(frecuencia) * 100)
+                 levels = c("Buena", "Débil", "Muy débil"))) %>%
+  mutate(frecRelativa = frecuencia/sum(frecuencia))
 
 # Gráfico de sectores circulares para la variable presión de agua
 presAgua %>%
-  ggplot(aes(x = "", y = perc, fill = `¿Cómo es la presión del agua?`)) +
+  ggplot(aes(x = "", y = frecRelativa*100, fill = `¿Cómo es la presión del agua?`)) +
   geom_bar(width = 1, size = 1, color = "white", stat = "identity") +
   coord_polar("y") +
-  geom_text(aes(label = paste0(round(perc), "%")),
+  geom_text(aes(label = paste0(round(frecRelativa*100), "%")),
             position = position_stack(vjust = 0.5)) +
   labs(x = NULL, y = NULL, fill = NULL,
        title = paste("Presión de agua. ",title),
@@ -83,7 +83,18 @@ presAgua %>%
         axis.ticks = element_blank(),
         plot.title = element_text(hjust = 0.5, color = "black"))
 
-
+# Gráfico de barras para la variable presión de agua
+presAgua %>%
+  ggplot(aes(`¿Cómo es la presión del agua?`,
+             frecRelativa))+
+  geom_col(width = 0.7,fill = "#458B74") +
+  scale_x_discrete(limits = c("Muy débil", "Débil", "Buena")) +
+  scale_y_continuous(labels = scales::percent) +
+  theme_bw() + 
+  labs(title = paste("Presión de agua. ",title),
+       x = "Nivel de presión de agua",
+       y = "Porcentaje de viviendas",
+       caption = fuente)
 
 ### Para variable categórica con selección múltiple
 
