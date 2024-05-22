@@ -145,8 +145,9 @@ princCal_df %>%
 abonos <- Datos_LP %>%
   group_by(`¿Cuántos abonos/prepagos de datos móviles sostienen por mes en la vivienda?`) %>%
   summarize(frecuencia = n()) %>%
-  mutate(frecAcum = cumsum(frecuencia), frecRel = frecuencia/sum(frecuencia))
-colnames(abonos) <- c("abonosxcasa", "frecuencia", "frecAcum", "frecRelativa")
+  mutate(frecAcum = cumsum(frecuencia), frecRel = frecuencia/sum(frecuencia),
+         cumsum(frecuencia/sum(frecuencia)))
+colnames(abonos) <- c("abonosxcasa", "frecuencia", "frecAcum", "frecRelativa","frecRelativaAcum")
 
 # Creo un gráfico de bastones para la información en abonos
 abonos %>%
@@ -161,13 +162,9 @@ abonos %>%
                      title, sep=""),
        caption = fuente)
 
-# mediana
-obtenCuartil(abonos, abonos$frecuencia, 2)[1]
-
-# RI
-q1 <- as.integer(obtenCuartil(abonos, abonos$frecuencia, 1)[3])
-q3 <- as.integer(obtenCuartil(abonos, abonos$frecuencia, 3)[3])
-q3-q1 #RI
+abonoslist <- as.integer(Datos_LP$`¿Cuántos abonos/prepagos de datos móviles sostienen por mes en la vivienda?`)
+IQR(abonoslist)
+median(abonoslist)
 
 ### Para variable cuantitativa continua
 
