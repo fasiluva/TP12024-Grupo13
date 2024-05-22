@@ -189,13 +189,13 @@ colnames(percAumentos) <- c("aumentos_perc")
 
 # Creo un histograma para percAumentos
 percAumentos %>%
-    ggplot(aes(aumentos_perc)) +
+    ggplot(aes(x=aumentos_perc)) +
     geom_histogram(binwidth = 0.5,fill = "#458B74", bins = 80,
-                   alpha = 0.8) +
+                   alpha = 0.8, boundary = 0) +
     theme_bw() +
     scale_x_continuous(labels = scales :: percent) +
-    labs(x = "porcentaje de aumentos",
-         y = "Frecuencia",
+    labs(x = "Porcentaje de aumentos",
+         y = "Cantidad de viviendas",
          title = paste("Porcentaje de aumento de alquiler en el último año\n",
                        title, sep=""),
          caption = fuente)
