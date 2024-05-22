@@ -169,7 +169,7 @@ abonos %>%
   theme_bw() +
   labs(x = "abonos/prepagos de datos móviles",
        y = "Porcentaje de viviendas",
-       title = paste("Distribución de abonos/prepagos de datos móviles que se sostiene\npor mes en las viviendas\n",
+       title = paste("Abonos/prepagos de datos móviles que se sostienen por mes en las viviendas\n",
                      title, sep=""),
        caption = fuente)
 
@@ -200,11 +200,16 @@ percAumentos %>%
                        title, sep=""),
          caption = fuente)
 
+# Cuartiles
+quantile(percAumentos$aumentos_perc)
+
 # Mediana
 median(percAumentos$aumentos_perc)
 
 #Rango intercurtilico
 IQR(percAumentos$aumentos_perc)
+
+
 
 ### Relación entre una variable categórica y una variable
 ### cuantitativa
@@ -223,8 +228,8 @@ estadoLugar <- Datos_LP[, "El lugar que habitan actualmente es:"]
 colnames(estadoLugar) <- c("estado")
 
 # Boxplot comparativo
-# Posesión del lugar que habitan con respecto a los
-# años viviendo en ese lugar
+# Tiempo de residencia con respecto al tipo
+# de posesión de la vivienda
 Datos_LP %>%
   ggplot(aes(estadoLugar$estado, tiempoReside$tiempo))+
   geom_boxplot(fill = "#EEC591") +
@@ -233,7 +238,7 @@ Datos_LP %>%
   theme_bw() +
   labs(x = "El lugar que habitan actualmente es",
        y = "Cantidad de años en la vivienda",
-       title = paste("Tipo posesión de vivienda con respecto a los años que viven en la misma\n",
+       title = paste("Tiempo de residencia con respecto al tipo de posesión de la vivienda\n",
                      title, sep = ""),
        caption = fuente)
 
