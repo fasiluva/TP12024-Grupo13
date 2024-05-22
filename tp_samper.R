@@ -129,7 +129,7 @@ princCal_df %>%
   scale_x_continuous(breaks = c(100,200,300,400,500)) +
   scale_y_discrete(labels = label_wrap(20)) +
   labs(y = "Fuente de calefacción",
-       x = "Frecuencia",
+       x = "Cantidad de viviendas",
        title = paste("Principales fuentes de calefacción en barrios populares.\n", 
                      title, sep = ""),
        caption = fuente)
@@ -165,8 +165,8 @@ abonos %>%
 obtenCuartil(abonos, abonos$frecuencia, 2)[1]
 
 # RI
-q1 <- as.integer(obtenCuartil(abonos, abonos$frecuencia, 1)[1])
-q3 <- as.integer(obtenCuartil(abonos, abonos$frecuencia, 3)[1])
+q1 <- as.integer(obtenCuartil(abonos, abonos$frecuencia, 1)[3])
+q3 <- as.integer(obtenCuartil(abonos, abonos$frecuencia, 3)[3])
 q3-q1 #RI
 
 ### Para variable cuantitativa continua
