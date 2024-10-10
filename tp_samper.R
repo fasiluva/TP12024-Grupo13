@@ -242,15 +242,26 @@ Datos_LP %>%
                      title, sep = ""),
        caption = fuente)
 
+propioCompr <- "Propio con algún comprobante de tenencia"
+sinTitulos <- "Propio sin títulos"
 
+anlizaResTiempo <- function(tipoResidencia) {
+  datosFiltrados <- Datos_LP[Datos_LP$`El lugar que habitan actualmente es:` == tipoResidencia,
+                             "Tiempo de residencia en la vivienda actual (en años)"]
+  colnames(datosFiltrados) <- c("c1")
+  print(quantile(datosFiltrados$c1))
+  print(length(datosFiltrados$c1))
+}
+
+
+### Relación entre dos variables categóricas
+###
 formaObtAgua <- Datos_LP$`¿De qué forma obtiene el agua dentro de su vivienda?`
 formaObtAgua <- str_replace_all(formaObtAgua, 
   "A través de una conexión sin medidor, es decir “informalmente”, sea a través de una conexión directa a la red pública o a través de una conexión indirecta a través de un vecinx “informalmente”",
   "A través de una conexión sin medidor, es decir “informalmente”")
 
-### Relación entre dos variables categóricas
-
-# Graáfico de barras subdivididas para las columnas de
+# Gráfico de barras subdivididas para las columnas de
 # Datos_LP
 # `¿De qué forma obtiene el agua dentro de su vivienda?`
 # `¿Cómo es la presión del agua?`
